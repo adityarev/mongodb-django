@@ -1,3 +1,8 @@
-from django.db import models
+from djongo import models
 
-# Create your models here.
+
+class Event(models.Model):
+    date = models.IntegerField()
+    description = models.CharField(max_length=101)
+    lang = models.CharField(max_length=2)
+    granularity = models.CharField(max_length=11)

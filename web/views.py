@@ -1,6 +1,10 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+from django.views import View
+
+from web.models import Event
 
 
-class Index:
-    def index(self):
-        return HttpResponse('Hello World! My first django project :D')
+class Index(View):
+    def get(self, request):
+        events = Event.objects.all()
+        return render(request, 'index.html', {'events': events})
