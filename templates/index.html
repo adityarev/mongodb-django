@@ -42,15 +42,32 @@
                 </thead>
                 <tbody>
                 	{% for event in events %}
-	                    <tr>
+	                    <tr id="{{event.id}}">
 	                        <td>{{event.date}}</td>
 	                        <td>{{event.description}}</td>
 	                        <td>{{event.lang}}</td>
 	                        <td>{{event.granularity}}</td>
 	                        <td>
-								<a class="add" title="Add" data-toggle="tooltip"><i class="material-icons">&#xE03B;</i></a>
-	                            <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-	                            <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+								<a class="add" title="Add" data-toggle="tooltip">
+									<i class="material-icons">&#xE03B;</i></a>
+	                            <a class="edit" title="Edit" data-toggle="tooltip">
+									<i class="material-icons">&#xE254;</i></a>
+								<a class="delete" title="Delete" data-toggle="tooltip">
+									<i class="material-icons">&#xE872;</i></a>
+
+								<form id="form_add-{{event.id}}" action="{% url 'create' %}"method="post" style="display: none">
+									{% csrf_token %}
+									<input id="hidden_id-{{event.id}}" type="hidden" name="id" value="{{event.id}}">
+									<input id="hidden_date-{{event.id}}" type="hidden" name="date" value="{{event.date}}">
+									<input id="hidden_description-{{event.id}}" type="hidden" name="description" value="{{event.description}}">
+									<input id="hidden_lang-{{event.id}}" type="hidden" name="lang" value="{{event.lang}}">
+									<input id="hidden_granularity-{{event.id}}" type="hidden" name="granularity" value="{{event.granularity}}">
+								</form>
+
+								<form id="form_delete-{{event.id}}" action="{% url 'delete' %}" method="post" style="display: none">
+									{% csrf_token %}
+									<input type="hidden" name="id" value="{{event.id}}">
+								</form>
 	                        </td>
 	                    </tr>
                     {% endfor %}
@@ -58,6 +75,7 @@
             </table>
         </div>
     </div>
+
 	<script src="{% static 'js/index.js' %}"></script>
 </body>
 </html>
